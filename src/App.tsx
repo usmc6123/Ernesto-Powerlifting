@@ -5,8 +5,8 @@ import Dashboard from "./pages/Dashboard";
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
-  const [theme, setTheme] = useState<"midnight" | "monochrome">(() => {
-    return (localStorage.getItem("reyes_theme") as "midnight" | "monochrome") || "midnight";
+  const [theme, setTheme] = useState<string>(() => {
+    return localStorage.getItem("reyes_theme") || "monochrome";
   });
 
   useEffect(() => {

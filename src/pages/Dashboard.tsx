@@ -43,8 +43,8 @@ import SettingsModal from "../components/SettingsModal";
 
 interface DashboardProps {
   onLogout: () => void;
-  theme: "midnight" | "monochrome";
-  setTheme: (theme: "midnight" | "monochrome") => void;
+  theme: string;
+  setTheme: (theme: string) => void;
 }
 
 export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps) {
@@ -229,17 +229,101 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
 
   const correlationChartLabels = sortedMoMStats.map(m => monthNamesShort[m.month] || m.month);
   
-  const isMidnight = theme === "midnight";
-  
+  const themeChartColors: Record<string, { bench: string; squat: string; deadlift: string; text: string; grid: string; tooltipBg: string; tooltipBorder: string }> = {
+    midnight: {
+      bench: "#cbd5e1",
+      squat: "#22d3ee",
+      deadlift: "#ea580c",
+      text: "#cbd5e1",
+      grid: "rgba(32, 46, 58, 0.45)",
+      tooltipBg: "#121921",
+      tooltipBorder: "rgba(34, 211, 238, 0.3)",
+    },
+    monochrome: {
+      bench: "#ffffff",
+      squat: "#aaaaaa",
+      deadlift: "#555555",
+      text: "#f1f5f9",
+      grid: "rgba(255, 255, 255, 0.08)",
+      tooltipBg: "#0d0d0d",
+      tooltipBorder: "rgba(255, 255, 255, 0.15)",
+    },
+    blood_iron: {
+      bench: "#dc2626",
+      squat: "#ef4444",
+      deadlift: "#f87171",
+      text: "#fca5a5",
+      grid: "rgba(220, 38, 38, 0.15)",
+      tooltipBg: "#1a0000",
+      tooltipBorder: "rgba(220, 38, 38, 0.3)",
+    },
+    gold_standard: {
+      bench: "#f59e0b",
+      squat: "#fbbf24",
+      deadlift: "#fcd34d",
+      text: "#fde68a",
+      grid: "rgba(245, 158, 11, 0.15)",
+      tooltipBg: "#1a1400",
+      tooltipBorder: "rgba(245, 158, 11, 0.3)",
+    },
+    matrix: {
+      bench: "#22c55e",
+      squat: "#4ade80",
+      deadlift: "#86efac",
+      text: "#dcfce7",
+      grid: "rgba(34, 197, 94, 0.15)",
+      tooltipBg: "#001400",
+      tooltipBorder: "rgba(34, 197, 94, 0.3)",
+    },
+    neon_pump: {
+      bench: "#e879f9",
+      squat: "#a855f7",
+      deadlift: "#06b6d4",
+      text: "#fdf4ff",
+      grid: "rgba(232, 121, 249, 0.15)",
+      tooltipBg: "#1a0020",
+      tooltipBorder: "rgba(232, 121, 249, 0.3)",
+    },
+    arctic: {
+      bench: "#7dd3fc",
+      squat: "#38bdf8",
+      deadlift: "#e0f2fe",
+      text: "#e0f2fe",
+      grid: "rgba(125, 211, 252, 0.15)",
+      tooltipBg: "#051a2e",
+      tooltipBorder: "rgba(125, 211, 252, 0.3)",
+    },
+    carbon_fire: {
+      bench: "#f97316",
+      squat: "#fb923c",
+      deadlift: "#fdba74",
+      text: "#ffedd5",
+      grid: "rgba(249, 115, 22, 0.15)",
+      tooltipBg: "#111111",
+      tooltipBorder: "rgba(249, 115, 22, 0.3)",
+    },
+    chalk: {
+      bench: "#1a1a1a",
+      squat: "#444444",
+      deadlift: "#888888",
+      text: "#1a1a1a",
+      grid: "rgba(0, 0, 0, 0.12)",
+      tooltipBg: "#f5f0e8",
+      tooltipBorder: "rgba(0, 0, 0, 0.2)",
+    },
+  };
+
+  const chartConfig = themeChartColors[theme] || themeChartColors.monochrome;
+
   const correlationChartData = {
     labels: correlationChartLabels.length > 0 ? correlationChartLabels : ["FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
     datasets: [
       {
         label: "Best Bench Press (lbs)",
         data: sortedMoMStats.map(m => m.bestBench || 0),
-        borderColor: isMidnight ? "#cbd5e1" : "#ffffff",
+        borderColor: chartConfig.bench,
         borderWidth: 2,
-        pointBackgroundColor: isMidnight ? "#cbd5e1" : "#ffffff",
+        pointBackgroundColor: chartConfig.bench,
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -248,9 +332,9 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
       {
         label: "Best Squat (lbs)",
         data: sortedMoMStats.map(m => m.bestSquat || 0),
-        borderColor: isMidnight ? "#22d3ee" : "#aaaaaa",
+        borderColor: chartConfig.squat,
         borderWidth: 2,
-        pointBackgroundColor: isMidnight ? "#22d3ee" : "#aaaaaa",
+        pointBackgroundColor: chartConfig.squat,
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -259,9 +343,9 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
       {
         label: "Best Deadlift (lbs)",
         data: sortedMoMStats.map(m => m.bestDeadlift || 0),
-        borderColor: isMidnight ? "#ea580c" : "#555555",
+        borderColor: chartConfig.deadlift,
         borderWidth: 2,
-        pointBackgroundColor: isMidnight ? "#ea580c" : "#555555",
+        pointBackgroundColor: chartConfig.deadlift,
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -277,7 +361,7 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
       legend: {
         position: "top" as const,
         labels: {
-          color: isMidnight ? "#cbd5e1" : "#ffffff",
+          color: chartConfig.text,
           font: {
             family: "Space Mono",
             size: 10,
@@ -286,16 +370,16 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
         },
       },
       tooltip: {
-        backgroundColor: isMidnight ? "#121921" : "#0d0d0d",
-        borderColor: isMidnight ? "rgba(34, 211, 238, 0.3)" : "rgba(255, 255, 255, 0.15)",
+        backgroundColor: chartConfig.tooltipBg,
+        borderColor: chartConfig.tooltipBorder,
         borderWidth: 1,
-        titleColor: "#ffffff",
+        titleColor: chartConfig.text,
         titleFont: {
           family: "Space Mono",
           size: 11,
           weight: "bold" as const,
         },
-        bodyColor: isMidnight ? "#cbd5e1" : "#ffffff",
+        bodyColor: chartConfig.text,
         bodyFont: {
           family: "Space Grotesk",
           size: 11,
@@ -306,10 +390,10 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
     scales: {
       x: {
         grid: {
-          color: isMidnight ? "rgba(32, 46, 58, 0.45)" : "rgba(255, 255, 255, 0.08)",
+          color: chartConfig.grid,
         },
         ticks: {
-          color: isMidnight ? "#8ea2b5" : "#aaaaaa",
+          color: chartConfig.text,
           font: {
             family: "Space Mono",
             size: 9,
@@ -318,10 +402,10 @@ export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps)
       },
       y: {
         grid: {
-          color: isMidnight ? "rgba(32, 46, 58, 0.45)" : "rgba(255, 255, 255, 0.08)",
+          color: chartConfig.grid,
         },
         ticks: {
-          color: isMidnight ? "#cbd5e1" : "#ffffff",
+          color: chartConfig.text,
           font: {
             family: "Space Mono",
             size: 9,

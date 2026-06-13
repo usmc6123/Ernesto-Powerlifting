@@ -141,6 +141,370 @@
   --theme-hex-stroke: #ffffff;
 }
 
+:root[data-theme="blood_iron"] {
+  --theme-bg: radial-gradient(circle at 50% 30%, #1a0000 0%, #0a0000 100%);
+  --theme-card-bg: rgba(26, 0, 0, 0.55);
+  --theme-card-border: rgba(220, 38, 38, 0.3);
+  --theme-card-border-hover: rgba(220, 38, 38, 0.65);
+  --theme-card-hover-shadow: 0 0 12px rgba(220, 38, 38, 0.15);
+  
+  --theme-accent: #dc2626;
+  --theme-accent-hover: #ef4444;
+  --theme-accent-glow: rgba(220, 38, 38, 0.25);
+  
+  --theme-text-dim: #991b1b;
+  --theme-text-normal: #fca5a5;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(26, 0, 0, 0.2);
+  --theme-unlogged-border: rgba(220, 38, 38, 0.1);
+  --theme-skip-bg: rgba(153, 27, 27, 0.8);
+  --theme-skip-border: #ef4444;
+  --theme-rest-bg: #2e0000;
+  --theme-rest-border: #dc2626;
+  --theme-trained-bg: #dc2626;
+  --theme-trained-border: #dc2626;
+  --theme-trained-shadow: rgba(220, 38, 38, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(220, 38, 38, 0.1);
+  --theme-header-bg: rgba(15, 0, 0, 0.9);
+  --theme-tab-active-bg: rgba(220, 38, 38, 0.15);
+  --theme-tab-active-shadow: rgba(220, 38, 38, 0.25);
+  --theme-tab-active-border: #dc2626;
+  --theme-goal-bar-bg: #0d0000;
+  --theme-goal-bar-fill: #dc2626;
+  --theme-goal-shadow: 0 0 5px #dc2626;
+
+  /* Logo integration variables */
+  --logo-metal-start: #ffbaba;
+  --logo-metal-mid: #dc2626;
+  --logo-metal-end: #991b1b;
+  --logo-accent: #dc2626;
+  --logo-glow: rgba(220, 38, 38, 0.6);
+  --logo-ring-bg: #0a0000;
+  --logo-lion-stroke: #dc2626;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #dc2626;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #dc2626;
+}
+
+:root[data-theme="gold_standard"] {
+  --theme-bg: radial-gradient(circle at 50% 30%, #1a1400 0%, #0a0800 100%);
+  --theme-card-bg: rgba(26, 20, 0, 0.55);
+  --theme-card-border: rgba(245, 158, 11, 0.3);
+  --theme-card-border-hover: rgba(245, 158, 11, 0.65);
+  --theme-card-hover-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+  
+  --theme-accent: #f59e0b;
+  --theme-accent-hover: #fbbf24;
+  --theme-accent-glow: rgba(245, 158, 11, 0.25);
+  
+  --theme-text-dim: #b45309;
+  --theme-text-normal: #fde68a;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(26, 20, 0, 0.2);
+  --theme-unlogged-border: rgba(245, 158, 11, 0.1);
+  --theme-skip-bg: rgba(180, 83, 9, 0.8);
+  --theme-skip-border: #fbbf24;
+  --theme-rest-bg: #352500;
+  --theme-rest-border: #f59e0b;
+  --theme-trained-bg: #f59e0b;
+  --theme-trained-border: #f59e0b;
+  --theme-trained-shadow: rgba(245, 158, 11, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(245, 158, 11, 0.1);
+  --theme-header-bg: rgba(15, 12, 0, 0.9);
+  --theme-tab-active-bg: rgba(245, 158, 11, 0.15);
+  --theme-tab-active-shadow: rgba(245, 158, 11, 0.25);
+  --theme-tab-active-border: #f59e0b;
+  --theme-goal-bar-bg: #0d0a00;
+  --theme-goal-bar-fill: #f59e0b;
+  --theme-goal-shadow: 0 0 5px #f59e0b;
+
+  /* Logo integration variables */
+  --logo-metal-start: #fef3c7;
+  --logo-metal-mid: #f59e0b;
+  --logo-metal-end: #b45309;
+  --logo-accent: #f59e0b;
+  --logo-glow: rgba(245, 158, 11, 0.6);
+  --logo-ring-bg: #0a0800;
+  --logo-lion-stroke: #f59e0b;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #f59e0b;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #f59e0b;
+}
+
+:root[data-theme="matrix"] {
+  --theme-bg: radial-gradient(circle at 50% 30%, #001400 0%, #000a00 100%);
+  --theme-card-bg: rgba(0, 18, 2, 0.55);
+  --theme-card-border: rgba(34, 197, 94, 0.3);
+  --theme-card-border-hover: rgba(34, 197, 94, 0.65);
+  --theme-card-hover-shadow: 0 0 12px rgba(34, 197, 94, 0.15);
+  
+  --theme-accent: #22c55e;
+  --theme-accent-hover: #4ade80;
+  --theme-accent-glow: rgba(34, 197, 94, 0.25);
+  
+  --theme-text-dim: #15803d;
+  --theme-text-normal: #dcfce7;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(0, 20, 0, 0.2);
+  --theme-unlogged-border: rgba(34, 197, 94, 0.1);
+  --theme-skip-bg: rgba(21, 128, 61, 0.8);
+  --theme-skip-border: #4ade80;
+  --theme-rest-bg: #002e00;
+  --theme-rest-border: #22c55e;
+  --theme-trained-bg: #22c55e;
+  --theme-trained-border: #22c55e;
+  --theme-trained-shadow: rgba(34, 197, 94, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(34, 197, 94, 0.1);
+  --theme-header-bg: rgba(0, 10, 0, 0.9);
+  --theme-tab-active-bg: rgba(34, 197, 94, 0.15);
+  --theme-tab-active-shadow: rgba(34, 197, 94, 0.25);
+  --theme-tab-active-border: #22c55e;
+  --theme-goal-bar-bg: #000c00;
+  --theme-goal-bar-fill: #22c55e;
+  --theme-goal-shadow: 0 0 5px #22c55e;
+
+  /* Logo integration variables */
+  --logo-metal-start: #dcfce7;
+  --logo-metal-mid: #22c55e;
+  --logo-metal-end: #15803d;
+  --logo-accent: #22c55e;
+  --logo-glow: rgba(34, 197, 94, 0.6);
+  --logo-ring-bg: #000a00;
+  --logo-lion-stroke: #22c55e;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #22c55e;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #22c55e;
+}
+
+:root[data-theme="neon_pump"] {
+  --theme-bg: radial-gradient(circle at 50% 30%, #1a0020 0%, #0d000f 100%);
+  --theme-card-bg: rgba(22, 0, 28, 0.55);
+  --theme-card-border: rgba(232, 121, 249, 0.3);
+  --theme-card-border-hover: rgba(232, 121, 249, 0.65);
+  --theme-card-hover-shadow: 0 0 16px rgba(232, 121, 249, 0.2);
+  
+  --theme-accent: #e879f9;
+  --theme-accent-hover: #f0abfc;
+  --theme-accent-glow: rgba(232, 121, 249, 0.25);
+  
+  --theme-text-dim: #a21caf;
+  --theme-text-normal: #fdf4ff;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(22, 0, 28, 0.2);
+  --theme-unlogged-border: rgba(232, 121, 249, 0.1);
+  --theme-skip-bg: rgba(162, 28, 175, 0.8);
+  --theme-skip-border: #f0abfc;
+  --theme-rest-bg: #30003a;
+  --theme-rest-border: #e879f9;
+  --theme-trained-bg: #e879f9;
+  --theme-trained-border: #e879f9;
+  --theme-trained-shadow: rgba(232, 121, 249, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(232, 121, 249, 0.1);
+  --theme-header-bg: rgba(13, 0, 15, 0.9);
+  --theme-tab-active-bg: rgba(232, 121, 249, 0.15);
+  --theme-tab-active-shadow: rgba(232, 121, 249, 0.25);
+  --theme-tab-active-border: #e879f9;
+  --theme-goal-bar-bg: #0d0010;
+  --theme-goal-bar-fill: #e879f9;
+  --theme-goal-shadow: 0 0 5px #e879f9;
+
+  /* Logo integration variables */
+  --logo-metal-start: #fdf4ff;
+  --logo-metal-mid: #e879f9;
+  --logo-metal-end: #a21caf;
+  --logo-accent: #e879f9;
+  --logo-glow: rgba(232, 121, 249, 0.6);
+  --logo-ring-bg: #0d000f;
+  --logo-lion-stroke: #e879f9;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #e879f9;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #e879f9;
+}
+
+:root[data-theme="arctic"] {
+  --theme-bg: radial-gradient(circle at 50% 30%, #051a2e 0%, #020d1a 100%);
+  --theme-card-bg: rgba(5, 21, 38, 0.55);
+  --theme-card-border: rgba(125, 211, 252, 0.3);
+  --theme-card-border-hover: rgba(125, 211, 252, 0.65);
+  --theme-card-hover-shadow: 0 0 12px rgba(125, 211, 252, 0.15);
+  
+  --theme-accent: #7dd3fc;
+  --theme-accent-hover: #38bdf8;
+  --theme-accent-glow: rgba(125, 211, 252, 0.25);
+  
+  --theme-text-dim: #0369a1;
+  --theme-text-normal: #e0f2fe;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(5, 21, 38, 0.2);
+  --theme-unlogged-border: rgba(125, 211, 252, 0.1);
+  --theme-skip-bg: rgba(3, 105, 161, 0.8);
+  --theme-skip-border: #38bdf8;
+  --theme-rest-bg: #002d4f;
+  --theme-rest-border: #7dd3fc;
+  --theme-trained-bg: #7dd3fc;
+  --theme-trained-border: #7dd3fc;
+  --theme-trained-shadow: rgba(125, 211, 252, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(125, 211, 252, 0.1);
+  --theme-header-bg: rgba(2, 13, 26, 0.9);
+  --theme-tab-active-bg: rgba(125, 211, 252, 0.15);
+  --theme-tab-active-shadow: rgba(125, 211, 252, 0.25);
+  --theme-tab-active-border: #7dd3fc;
+  --theme-goal-bar-bg: #010912;
+  --theme-goal-bar-fill: #7dd3fc;
+  --theme-goal-shadow: 0 0 5px #7dd3fc;
+
+  /* Logo integration variables */
+  --logo-metal-start: #f0f9ff;
+  --logo-metal-mid: #7dd3fc;
+  --logo-metal-end: #0369a1;
+  --logo-accent: #7dd3fc;
+  --logo-glow: rgba(125, 211, 252, 0.6);
+  --logo-ring-bg: #020d1a;
+  --logo-lion-stroke: #7dd3fc;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #7dd3fc;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #7dd3fc;
+}
+
+:root[data-theme="carbon_fire"] {
+  --theme-bg: repeating-linear-gradient(45deg, #0f0f0f 0px, #0f0f0f 2px, #0a0a0a 2px, #0a0a0a 4px);
+  --theme-card-bg: rgba(18, 18, 18, 0.85);
+  --theme-card-border: rgba(249, 115, 22, 0.3);
+  --theme-card-border-hover: rgba(249, 115, 22, 0.65);
+  --theme-card-hover-shadow: 0 0 12px rgba(249, 115, 22, 0.15);
+  
+  --theme-accent: #f97316;
+  --theme-accent-hover: #fb923c;
+  --theme-accent-glow: rgba(249, 115, 22, 0.25);
+  
+  --theme-text-dim: #c2410a;
+  --theme-text-normal: #ffedd5;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(18, 18, 18, 0.4);
+  --theme-unlogged-border: rgba(249, 115, 22, 0.1);
+  --theme-skip-bg: rgba(194, 65, 10, 0.8);
+  --theme-skip-border: #fb923c;
+  --theme-rest-bg: #3c1a00;
+  --theme-rest-border: #f97316;
+  --theme-trained-bg: #f97316;
+  --theme-trained-border: #f97316;
+  --theme-trained-shadow: rgba(249, 115, 22, 0.5);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(249, 115, 22, 0.1);
+  --theme-header-bg: rgba(10, 10, 10, 0.9);
+  --theme-tab-active-bg: rgba(249, 115, 22, 0.15);
+  --theme-tab-active-shadow: rgba(249, 115, 22, 0.25);
+  --theme-tab-active-border: #f97316;
+  --theme-goal-bar-bg: #050505;
+  --theme-goal-bar-fill: #f97316;
+  --theme-goal-shadow: 0 0 5px #f97316;
+
+  /* Logo integration variables */
+  --logo-metal-start: #fff7ed;
+  --logo-metal-mid: #f97316;
+  --logo-metal-end: #c2410a;
+  --logo-accent: #f97316;
+  --logo-glow: rgba(249, 115, 22, 0.6);
+  --logo-ring-bg: #0a0a0a;
+  --logo-lion-stroke: #f97316;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #f97316;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.05;
+  --theme-hex-stroke: #f97316;
+}
+
+:root[data-theme="chalk"] {
+  --theme-bg: #f5f0e8;
+  --theme-card-bg: rgba(0, 0, 0, 0.04);
+  --theme-card-border: rgba(0, 0, 0, 0.15);
+  --theme-card-border-hover: rgba(0, 0, 0, 0.3);
+  --theme-card-hover-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
+  --theme-accent: #1a1a1a;
+  --theme-accent-hover: #444444;
+  --theme-accent-glow: rgba(0, 0, 0, 0.05);
+  
+  --theme-text-dim: #777777;
+  --theme-text-normal: #1a1a1a;
+  
+  /* Heatmap custom values */
+  --theme-unlogged-bg: rgba(0, 0, 0, 0.02);
+  --theme-unlogged-border: rgba(0, 0, 0, 0.06);
+  --theme-skip-bg: rgba(120, 120, 120, 0.2);
+  --theme-skip-border: rgba(0, 0, 0, 0.2);
+  --theme-rest-bg: rgba(0, 0, 0, 0.07);
+  --theme-rest-border: rgba(0, 0, 0, 0.12);
+  --theme-trained-bg: #1a1a1a;
+  --theme-trained-border: #1a1a1a;
+  --theme-trained-shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Additional elements */
+  --theme-btn-hover: rgba(0, 0, 0, 0.05);
+  --theme-header-bg: #ebe5db;
+  --theme-tab-active-bg: rgba(0, 0, 0, 0.08);
+  --theme-tab-active-shadow: none;
+  --theme-tab-active-border: #1a1a1a;
+  --theme-goal-bar-bg: rgba(0, 0, 0, 0.1);
+  --theme-goal-bar-fill: #1a1a1a;
+  --theme-goal-shadow: none;
+
+  /* Logo integration variables */
+  --logo-metal-start: #444444;
+  --logo-metal-mid: #1a1a1a;
+  --logo-metal-end: #000000;
+  --logo-accent: #1a1a1a;
+  --logo-glow: none;
+  --logo-ring-bg: #f5f0e8;
+  --logo-lion-stroke: #1a1a1a;
+  
+  /* Month Selection bar active stroke color */
+  --theme-month-active-bar: #1a1a1a;
+
+  /* Hexagon strokes adjustments */
+  --theme-hex-opacity: 0.04;
+  --theme-hex-stroke: #1a1a1a;
+}
+
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
