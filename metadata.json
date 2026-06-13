@@ -1,0 +1,6 @@
+{
+  "name": "Reyes Training Log",
+  "description": "A powerlifting and gym training tracker for Reyes, featuring historical charts, progress trackers, and consistency heatmaps.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
