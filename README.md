@@ -1,5 +1,7 @@
 # Reyes Training Log (RTL)
 
+[![Open in Google AI Studio](https://img.shields.io/badge/Open%20in-Google%20AI%20Studio-blue?logo=google&logoColor=white)](https://aistudio.google.com/apps/b31c8b29-41d6-439b-b9b0-a12bcf991d56?showPreview=true&showAssistant=true)
+
 A full-stack powerlifting and gym training tracker built using **React, Vite, TypeScript, Tailwind CSS, Express, and Firebase Admin SDK** (configured to deploy seamlessly to Vercel/Cloud Run).
 
 ## Features
