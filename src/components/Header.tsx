@@ -2,9 +2,10 @@ import { LogOut, Calendar } from "lucide-react";
 
 interface HeaderProps {
   onLogout: () => void;
+  onOpenSettings: () => void;
 }
 
-export default function Header({ onLogout }: HeaderProps) {
+export default function Header({ onLogout, onOpenSettings }: HeaderProps) {
   // Current UTC/Local Date formatted beautifully in Space Mono
   const today = new Date();
   const dayStr = today.toLocaleDateString("en-US", {
@@ -15,28 +16,28 @@ export default function Header({ onLogout }: HeaderProps) {
   }).toUpperCase();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md px-4 py-4 sm:px-6 flex justify-between items-center transition-all">
+    <header className="sticky top-0 z-40 w-full border-b border-theme-border flex justify-between items-center px-4 py-4 sm:px-6 transition-all" style={{ background: "var(--theme-header-bg)", backdropFilter: "blur(12px)" }}>
       <div className="flex items-center gap-4 select-none">
         {/* Scaled-down Metallic Barbell Lion Badge */}
         <svg width="110" height="48" viewBox="0 0 220 96" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
           <defs>
             <linearGradient id="header-metal" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#e2e8f0" />
-              <stop offset="40%" stopColor="#94a3b8" />
-              <stop offset="70%" stopColor="#475569" />
-              <stop offset="100%" stopColor="#1e293b" />
+              <stop offset="0%" stopColor="var(--logo-metal-start, #e2e8f0)" />
+              <stop offset="40%" stopColor="var(--logo-metal-mid, #94a3b8)" />
+              <stop offset="70%" stopColor="var(--logo-metal-end, #475569)" />
+              <stop offset="100%" stopColor="var(--logo-ring-bg, #1e293b)" />
             </linearGradient>
             <linearGradient id="header-metal-light" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#64748b" />
-              <stop offset="30%" stopColor="#cbd5e1" />
+              <stop offset="0%" stopColor="var(--logo-metal-end, #64748b)" />
+              <stop offset="30%" stopColor="var(--logo-metal-start, #cbd5e1)" />
               <stop offset="50%" stopColor="#ffffff" />
-              <stop offset="70%" stopColor="#94a3b8" />
-              <stop offset="100%" stopColor="#334155" />
+              <stop offset="70%" stopColor="var(--logo-metal-start, #94a3b8)" />
+              <stop offset="100%" stopColor="var(--logo-metal-end, #334155)" />
             </linearGradient>
             <linearGradient id="header-white-glow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="50%" stopColor="#cccccc" />
-              <stop offset="100%" stopColor="#666666" />
+              <stop offset="0%" stopColor="var(--logo-accent, #ffffff)" />
+              <stop offset="50%" stopColor="var(--logo-metal-start, #cccccc)" />
+              <stop offset="100%" stopColor="var(--logo-metal-end, #666666)" />
             </linearGradient>
           </defs>
 
@@ -57,10 +58,10 @@ export default function Header({ onLogout }: HeaderProps) {
 
           {/* Lion Shield Ring */}
           <circle cx="110" cy="48" r="27.5" fill="url(#header-metal-light)" stroke="#0f172a" strokeWidth="1.5" />
-          <circle cx="110" cy="48" r="23" fill="#131922" stroke="#1e293b" strokeWidth="1.5" />
+          <circle cx="110" cy="48" r="23" fill="var(--logo-ring-bg, #131922)" stroke="var(--logo-accent, #1e293b)" strokeWidth="1.5" />
 
           {/* Lion Head Drawing */}
-          <g transform="translate(93, 29)" stroke="url(#header-metal-light)" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" fill="none">
+          <g transform="translate(93, 29)" stroke="var(--logo-lion-stroke, #ffffff)" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" fill="none">
             <path d="M 17 0 L 11 3 L 8 10 L 4 6 L 0 13 L 5 18 L 1 24 L 7 28 L 17 38 L 27 28 L 33 24 L 29 18 L 34 13 L 30 6 L 26 10 L 23 3 Z" fill="#111827" strokeWidth="0.8" />
             <path d="M 8 13 L 13 16 L 17 12 L 21 16 L 26 13" />
             <path d="M 8 20 L 12 24 L 17 28 L 22 24 L 26 20" />
@@ -86,6 +87,15 @@ export default function Header({ onLogout }: HeaderProps) {
           <Calendar size={13} className="text-white/85" />
           <span>{dayStr}</span>
         </div>
+
+        <button
+          onClick={onOpenSettings}
+          id="btn-settings"
+          className="flex items-center gap-2 px-4 py-1.5 border border-white/20 hover:border-white/80 text-[10px] font-mono font-bold tracking-widest text-[#cbd5e1] hover:text-white hover:bg-white/5 transition-all duration-300 active:scale-95 cursor-pointer rounded-lg uppercase"
+        >
+          <span className="text-white text-[11px]">⚙</span>
+          <span>SETTINGS</span>
+        </button>
 
         <button
           onClick={onLogout}

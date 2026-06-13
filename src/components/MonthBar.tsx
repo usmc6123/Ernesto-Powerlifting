@@ -21,8 +21,8 @@ export default function MonthBar({ selectedMonth, onChangeMonth, monthlyStats }:
   ];
 
   return (
-    <div className="w-full border-b border-white/10 bg-[#0d0d0d]/95 overflow-x-auto scrollbar-thin select-none">
-      <div className="flex min-w-max md:grid md:grid-cols-12 divide-x divide-white/10">
+    <div className="w-full border-b border-theme-border bg-theme-card/90 overflow-x-auto scrollbar-thin select-none">
+      <div className="flex min-w-max md:grid md:grid-cols-12 divide-x divide-theme-border">
         {months.map((m) => {
           const isSelected = selectedMonth === m.key;
           const hitRate = monthlyStats?.[m.key]?.hitRate != null ? monthlyStats[m.key].hitRate : null;
@@ -42,9 +42,15 @@ export default function MonthBar({ selectedMonth, onChangeMonth, monthlyStats }:
                 {m.label}
               </span>
               
-              {/* Bottom glowing white light bar for selected tab */}
+              {/* Bottom glowing light bar for selected tab */}
               {isSelected && (
-                <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-white shadow-[0_0_12px_rgba(255,255,255,0.85)] z-10"></div>
+                <div 
+                  className="absolute bottom-0 left-0 right-0 h-[3px] z-10"
+                  style={{
+                    backgroundColor: "var(--theme-month-active-bar, #ffffff)",
+                    boxShadow: "0 0 12px var(--theme-month-active-bar, rgba(255,255,255,0.85))"
+                  }}
+                ></div>
               )}
 
               {hitRate !== null && (

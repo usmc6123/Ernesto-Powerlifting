@@ -34,14 +34,14 @@ export default function Login({ onLoginSuccess }: LoginProps) {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 overflow-hidden font-sans select-none">
+    <div className="relative min-h-screen bg-transparent flex items-center justify-center p-4 overflow-hidden font-sans select-none">
       
       {/* 1. Hexagon Pattern & Network Nodes Background Decorative Layer */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full" style={{ opacity: "var(--theme-hex-opacity, 0.03)" }} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="hex-grid" width="56" height="97" patternUnits="userSpaceOnUse" patternTransform="scale(0.85)">
-              <path d="M28 0 L56 16.16 L56 48.5 L28 64.66 L0 48.5 L0 16.16 Z M28 97 L56 113.16 L56 145.5 L28 161.66 L0 145.5 L0 113.16 Z" fill="none" stroke="#ffffff" strokeWidth="1" />
+              <path d="M28 0 L56 16.16 L56 48.5 L28 64.66 L0 48.5 L0 16.16 Z M28 97 L56 113.16 L56 145.5 L28 161.66 L0 145.5 L0 113.16 Z" fill="none" stroke="var(--theme-hex-stroke, #ffffff)" strokeWidth="1" />
             </pattern>
           </defs>
           
@@ -91,7 +91,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
       </div>
 
       {/* 2. Main Glassmorphic Container Card */}
-      <div className="relative w-full max-w-[530px] border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-2xl p-8 sm:p-12 pt-20 pb-10 rounded-[32px] shadow-[0_25px_60px_rgba(0,0,0,0.8)] flex flex-col space-y-7 z-10">
+      <div className="glass-card relative w-full max-w-[530px] p-8 sm:p-12 pt-20 pb-10 rounded-[32px] flex flex-col space-y-7 z-10">
         
         {/* Absolute Floating Barbell Lion Badge */}
         <svg width="220" height="96" viewBox="0 0 220 96" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute -top-[48px] left-1/2 -translate-x-1/2 z-20 drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] select-none pointer-events-none">

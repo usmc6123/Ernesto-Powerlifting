@@ -5,6 +5,14 @@ import Dashboard from "./pages/Dashboard";
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [theme, setTheme] = useState<"midnight" | "monochrome">(() => {
+    return (localStorage.getItem("reyes_theme") as "midnight" | "monochrome") || "midnight";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("reyes_theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     // Check if token already exists in localStorage on mount
@@ -49,13 +57,13 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-[#f1f5f9] font-sans overflow-x-hidden">
+    <div className="relative min-h-screen bg-transparent text-[#f1f5f9] font-sans overflow-x-hidden">
       {"/* Absolute Hexagon Background and Neon Glows */"}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-        <svg className="absolute inset-0 w-full h-full opacity-[0.03]" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full" style={{ opacity: "var(--theme-hex-opacity, 0.03)" }} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="hex-grid-app" width="56" height="97" patternUnits="userSpaceOnUse" patternTransform="scale(0.85)">
-              <path d="M28 0 L56 16.16 L56 48.5 L28 64.66 L0 48.5 L0 16.16 Z M28 97 L56 113.16 L56 145.5 L28 161.66 L0 145.5 L0 113.16 Z" fill="none" stroke="#ffffff" strokeWidth="1" />
+              <path d="M28 0 L56 16.16 L56 48.5 L28 64.66 L0 48.5 L0 16.16 Z M28 97 L56 113.16 L56 145.5 L28 161.66 L0 145.5 L0 113.16 Z" fill="none" stroke="var(--theme-hex-stroke, #ffffff)" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#hex-grid-app)" />
@@ -78,7 +86,7 @@ export default function App() {
 
       <div className="relative z-10 w-full">
         {token ? (
-          <Dashboard onLogout={handleLogout} />
+          <Dashboard onLogout={handleLogout} theme={theme} setTheme={setTheme} />
         ) : (
           <Login onLoginSuccess={handleLoginSuccess} />
         )}

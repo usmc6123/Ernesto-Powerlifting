@@ -39,14 +39,18 @@ import SessionsView from "./Sessions";
 import ConsistencyView from "./Consistency";
 import CompareView from "./Compare";
 import LogModal from "../components/LogModal";
+import SettingsModal from "../components/SettingsModal";
 
 interface DashboardProps {
   onLogout: () => void;
+  theme: "midnight" | "monochrome";
+  setTheme: (theme: "midnight" | "monochrome") => void;
 }
 
-export default function Dashboard({ onLogout }: DashboardProps) {
+export default function Dashboard({ onLogout, theme, setTheme }: DashboardProps) {
   const [activeTab, setActiveTab] = useState<"dashboard" | "sessions" | "consistency" | "compare">("dashboard");
   const [selectedMonth, setSelectedMonth] = useState("2026-06"); // Set default to June 2026 which matches current system local date
+  const [showSettings, setShowSettings] = useState(false);
   
   // States
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -225,15 +229,17 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
   const correlationChartLabels = sortedMoMStats.map(m => monthNamesShort[m.month] || m.month);
   
+  const isMidnight = theme === "midnight";
+  
   const correlationChartData = {
     labels: correlationChartLabels.length > 0 ? correlationChartLabels : ["FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
     datasets: [
       {
         label: "Best Bench Press (lbs)",
         data: sortedMoMStats.map(m => m.bestBench || 0),
-        borderColor: "#ffffff",
+        borderColor: isMidnight ? "#cbd5e1" : "#ffffff",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: isMidnight ? "#cbd5e1" : "#ffffff",
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -242,9 +248,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       {
         label: "Best Squat (lbs)",
         data: sortedMoMStats.map(m => m.bestSquat || 0),
-        borderColor: "#aaaaaa",
+        borderColor: isMidnight ? "#22d3ee" : "#aaaaaa",
         borderWidth: 2,
-        pointBackgroundColor: "#aaaaaa",
+        pointBackgroundColor: isMidnight ? "#22d3ee" : "#aaaaaa",
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -253,9 +259,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       {
         label: "Best Deadlift (lbs)",
         data: sortedMoMStats.map(m => m.bestDeadlift || 0),
-        borderColor: "#555555",
+        borderColor: isMidnight ? "#ea580c" : "#555555",
         borderWidth: 2,
-        pointBackgroundColor: "#555555",
+        pointBackgroundColor: isMidnight ? "#ea580c" : "#555555",
         pointBorderColor: "#0a0a0a",
         pointHoverRadius: 6,
         tension: 0.35,
@@ -271,7 +277,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       legend: {
         position: "top" as const,
         labels: {
-          color: "#cbd5e1",
+          color: isMidnight ? "#cbd5e1" : "#ffffff",
           font: {
             family: "Space Mono",
             size: 10,
@@ -280,8 +286,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         },
       },
       tooltip: {
-        backgroundColor: "#0d0d0d",
-        borderColor: "rgba(255, 255, 255, 0.15)",
+        backgroundColor: isMidnight ? "#121921" : "#0d0d0d",
+        borderColor: isMidnight ? "rgba(34, 211, 238, 0.3)" : "rgba(255, 255, 255, 0.15)",
         borderWidth: 1,
         titleColor: "#ffffff",
         titleFont: {
@@ -289,7 +295,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
           size: 11,
           weight: "bold" as const,
         },
-        bodyColor: "#cbd5e1",
+        bodyColor: isMidnight ? "#cbd5e1" : "#ffffff",
         bodyFont: {
           family: "Space Grotesk",
           size: 11,
@@ -300,10 +306,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
     scales: {
       x: {
         grid: {
-          color: "rgba(32, 46, 58, 0.45)",
+          color: isMidnight ? "rgba(32, 46, 58, 0.45)" : "rgba(255, 255, 255, 0.08)",
         },
         ticks: {
-          color: "#8ea2b5",
+          color: isMidnight ? "#8ea2b5" : "#aaaaaa",
           font: {
             family: "Space Mono",
             size: 9,
@@ -312,10 +318,10 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       },
       y: {
         grid: {
-          color: "rgba(32, 46, 58, 0.45)",
+          color: isMidnight ? "rgba(32, 46, 58, 0.45)" : "rgba(255, 255, 255, 0.08)",
         },
         ticks: {
-          color: "#cbd5e1",
+          color: isMidnight ? "#cbd5e1" : "#ffffff",
           font: {
             family: "Space Mono",
             size: 9,
@@ -362,17 +368,17 @@ export default function Dashboard({ onLogout }: DashboardProps) {
       const dateStr = `${y}-${m}-${d}`;
       const dayIndex = currentDate.getDay(); // 0-6 (SUN-SAT)
       
-      let colorClass = "bg-[#111111] border-white/5"; // default unlogged
+      let colorClass = "bg-theme-unlogged-bg border border-theme-unlogged-border"; // default unlogged
       const sessType = sessionByDate[dateStr];
       if (sessType) {
         if (sessType === "trained") {
-          colorClass = "bg-white border-white shadow-[0_0_6px_rgba(255,255,255,0.4)]";
+          colorClass = "bg-theme-trained-bg border border-theme-trained-border shadow-[0_0_6px_var(--theme-trained-shadow)]";
         } else if (sessType === "home") {
-          colorClass = "bg-neutral-300 border-neutral-100";
+          colorClass = "bg-[var(--theme-home-bg)] border border-[var(--theme-home-border)]";
         } else if (sessType === "rest") {
-          colorClass = "bg-[#1c1c1c] border-white/10";
+          colorClass = "bg-theme-rest-bg border border-theme-rest-border";
         } else if (sessType === "skipped") {
-          colorClass = "bg-[#2a2a2a] border-white/20";
+          colorClass = "bg-theme-skip-bg border border-theme-skip-border";
         }
       }
 
@@ -413,9 +419,9 @@ export default function Dashboard({ onLogout }: DashboardProps) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f1f5f9] flex flex-col font-sans transition-all pb-12 relative">
+    <div className="min-h-screen bg-transparent text-[#f1f5f9] flex flex-col font-sans transition-all pb-12 relative">
       {/* Top Navigation Frame Header */}
-      <Header onLogout={onLogout} />
+      <Header onLogout={onLogout} onOpenSettings={() => setShowSettings(true)} />
 
       {/* Month Selection Bar */}
       <MonthBar
@@ -461,13 +467,13 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         ) : (
           <>
             {/* Nav Tabs Bar */}
-            <div className="flex border-b border-white/10 bg-black/60 rounded-xl p-1 overflow-x-auto select-none backdrop-blur-md">
+            <div className="flex border-b border-theme-border bg-theme-card/60 rounded-xl p-1 overflow-x-auto select-none backdrop-blur-md">
               <button
                 onClick={() => setActiveTab("dashboard")}
                 className={`flex-1 min-w-[100px] text-center py-2.5 text-xs font-mono font-bold tracking-widest cursor-pointer transition-all rounded-lg uppercase ${
                   activeTab === "dashboard"
-                    ? "bg-white/10 border-b-2 border-b-white text-white shadow-[inset_0_-2px_12px_rgba(255,255,255,0.05)]"
-                    : "text-[#aaaaaa] hover:text-[#cbd5e1] hover:bg-white/5"
+                    ? "nav-tab-active"
+                    : "text-theme-text-dim hover:text-[#ffffff] hover:bg-white/[0.03]"
                 }`}
               >
                 DASHBOARD
@@ -477,8 +483,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 onClick={() => setActiveTab("sessions")}
                 className={`flex-1 min-w-[100px] text-center py-2.5 text-xs font-mono font-bold tracking-widest cursor-pointer transition-all rounded-lg uppercase ${
                   activeTab === "sessions"
-                    ? "bg-white/10 border-b-2 border-b-white text-white shadow-[inset_0_-2px_12px_rgba(255,255,255,0.05)]"
-                    : "text-[#aaaaaa] hover:text-[#cbd5e1] hover:bg-white/5"
+                    ? "nav-tab-active"
+                    : "text-theme-text-dim hover:text-[#ffffff] hover:bg-white/[0.03]"
                 }`}
               >
                 SESSIONS
@@ -488,8 +494,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 onClick={() => setActiveTab("consistency")}
                 className={`flex-1 min-w-[100px] text-center py-2.5 text-xs font-mono font-bold tracking-widest cursor-pointer transition-all rounded-lg uppercase ${
                   activeTab === "consistency"
-                    ? "bg-white/10 border-b-2 border-b-white text-white shadow-[inset_0_-2px_12px_rgba(255,255,255,0.05)]"
-                    : "text-[#aaaaaa] hover:text-[#cbd5e1] hover:bg-white/5"
+                    ? "nav-tab-active"
+                    : "text-theme-text-dim hover:text-[#ffffff] hover:bg-white/[0.03]"
                 }`}
               >
                 CONSISTENCY
@@ -499,8 +505,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 onClick={() => setActiveTab("compare")}
                 className={`flex-1 min-w-[100px] text-center py-2.5 text-xs font-mono font-bold tracking-widest cursor-pointer transition-all rounded-lg uppercase ${
                   activeTab === "compare"
-                    ? "bg-white/10 border-b-2 border-b-white text-white shadow-[inset_0_-2px_12px_rgba(255,255,255,0.05)]"
-                    : "text-[#aaaaaa] hover:text-[#cbd5e1] hover:bg-white/5"
+                    ? "nav-tab-active"
+                    : "text-theme-text-dim hover:text-[#ffffff] hover:bg-white/[0.03]"
                 }`}
               >
                 COMPARE
@@ -512,8 +518,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
               <div className="space-y-6">
                 
                 {/* 1. Large Performance Correlation Line Chart Card (Spans full width) */}
-                <div className="border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-5 rounded-xl shadow-[0_6px_25px_rgba(0,0,0,0.45)] hover:border-white/20 transition-all duration-300">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/10 pb-3 mb-4 select-none">
+                <div className="glass-card p-5 rounded-xl">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-theme-border pb-3 mb-4 select-none">
                     <div>
                       <h3 className="text-xs font-mono font-bold tracking-[0.2em] text-[#f8fafc] uppercase flex items-center gap-2">
                         <span className="h-1.5 w-1.5 bg-white rounded-full animate-pulse"></span>
@@ -530,36 +536,36 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   </div>
 
                   {/* Summary Table under Chart */}
-                  <div className="overflow-x-auto border border-white/10 rounded-lg">
-                    <table className="w-full text-left font-mono border-collapse divide-y divide-white/10 text-[10px]">
-                      <thead className="bg-[#0b1014] text-[#aaaaaa] font-bold">
+                  <div className="overflow-x-auto border border-theme-border rounded-lg">
+                    <table className="w-full text-left font-mono border-collapse divide-y divide-theme-border text-[10px]">
+                      <thead className="bg-black/40 text-[#aaaaaa] font-bold">
                         <tr>
-                          <th className="px-3 py-2 border-r border-white/10 select-none">Performance Rating</th>
+                          <th className="px-3 py-2 border-r border-theme-border select-none">Performance Rating</th>
                           {columnsList.map((col, idx) => (
-                            <th key={idx} className="px-2 py-2 text-center border-r border-white/10 select-none">{col}</th>
+                            <th key={idx} className="px-2 py-2 text-center border-r border-theme-border select-none">{col}</th>
                           ))}
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/10 text-white">
+                      <tbody className="divide-y divide-theme-border text-white">
                         <tr className="hover:bg-white/5">
-                          <td className="px-3 py-2 border-r border-white/10 text-[#ffffff] font-sans font-medium text-xs">Best Bench Press (lbs)</td>
+                          <td className="px-3 py-2 border-r border-theme-border text-[#ffffff] font-sans font-medium text-xs">Best Bench Press (lbs)</td>
                           {columnsKeys.map((k, idx) => {
                             const val = getMonthStats(k).bestBench;
-                            return <td key={idx} className="px-2 py-2 text-center border-r border-white/10">{val ? `${val}` : "—"}</td>;
+                            return <td key={idx} className="px-2 py-2 text-center border-r border-theme-border">{val ? `${val}` : "—"}</td>;
                           })}
                         </tr>
                         <tr className="hover:bg-white/5">
-                          <td className="px-3 py-2 border-r border-white/10 text-[#ffffff] font-sans font-medium text-xs">Best Squat (lbs)</td>
+                          <td className="px-3 py-2 border-r border-theme-border text-[#ffffff] font-sans font-medium text-xs">Best Squat (lbs)</td>
                           {columnsKeys.map((k, idx) => {
                             const val = getMonthStats(k).bestSquat;
-                            return <td key={idx} className="px-2 py-2 text-center border-r border-white/10 text-white font-bold">{val ? `${val}` : "—"}</td>;
+                            return <td key={idx} className="px-2 py-2 text-center border-r border-theme-border text-white font-bold">{val ? `${val}` : "—"}</td>;
                           })}
                         </tr>
                         <tr className="hover:bg-white/5">
-                          <td className="px-3 py-2 border-r border-white/10 text-[#ffffff] font-sans font-medium text-xs">Best Deadlift (lbs)</td>
+                          <td className="px-3 py-2 border-r border-theme-border text-[#ffffff] font-sans font-medium text-xs">Best Deadlift (lbs)</td>
                           {columnsKeys.map((k, idx) => {
                             const val = getMonthStats(k).bestDeadlift;
-                            return <td key={idx} className="px-2 py-2 text-center border-r border-white/10 text-[#aaaaaa] font-bold">{val ? `${val}` : "—"}</td>;
+                            return <td key={idx} className="px-2 py-2 text-center border-r border-theme-border text-[#aaaaaa] font-bold">{val ? `${val}` : "—"}</td>;
                           })}
                         </tr>
                       </tbody>
@@ -571,8 +577,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6">
                   
                   {/* Column 1: Monthly Summary Card (4 columns) */}
-                  <div className="md:col-span-4 border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-5 rounded-xl flex flex-col justify-between hover:border-white/20 transition-all duration-300 min-h-[220px]">
-                    <div className="flex items-center gap-2 border-b border-white/10 pb-2 mb-3">
+                  <div className="glass-card md:col-span-4 p-5 rounded-xl flex flex-col justify-between min-h-[220px]">
+                    <div className="flex items-center gap-2 border-b border-theme-border pb-2 mb-3">
                       <Activity size={13} className="text-white" />
                       <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#aaaaaa] uppercase">
                         MONTHLY SUMMARY
@@ -610,8 +616,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   </div>
 
                   {/* Column 2: Goal Tracking Progress Card (4 columns) */}
-                  <div className="md:col-span-4 border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-5 rounded-xl flex flex-col justify-between hover:border-white/20 transition-all duration-300 min-h-[220px]">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+                  <div className="glass-card md:col-span-4 p-5 rounded-xl flex flex-col justify-between min-h-[220px]">
+                    <div className="flex items-center justify-between border-b border-theme-border pb-2 mb-3">
                       <div className="flex items-center gap-2">
                         <Target size={13} className="text-white" />
                         <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#aaaaaa] uppercase">
@@ -620,7 +626,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       </div>
                       <button
                         onClick={() => setShowAddGoalForm(!showAddGoalForm)}
-                        className="text-[9px] font-mono tracking-wider px-2 py-0.5 border border-white/30 text-white rounded hover:border-white hover:bg-white/5 cursor-pointer"
+                        className="text-[9px] font-mono tracking-wider px-2 py-0.5 border border-theme-accent/30 text-theme-accent rounded hover:border-theme-accent hover:bg-white/5 cursor-pointer"
                       >
                         + ADD
                       </button>
@@ -634,14 +640,14 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       ) : (
                         <table className="w-full text-[10px] font-mono text-left">
                           <thead>
-                            <tr className="text-[#666666] border-b border-white/10 pb-1 uppercase">
+                            <tr className="text-[#666666] border-b border-theme-border pb-1 uppercase">
                               <th className="py-1">LIFT TYPE</th>
                               <th className="py-1 text-center">START</th>
                               <th className="py-1 text-center">GOAL</th>
                               <th className="py-1 text-right">PROGRESS</th>
                             </tr>
                           </thead>
-                          <tbody className="divide-y divide-white/10 text-white">
+                          <tbody className="divide-y divide-theme-border text-white">
                             {goals.map((g) => {
                               const current = currentBestWeights[g.lift] || 0;
                               const baseline = g.baselineWeight;
@@ -661,8 +667,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                                   <td className="py-2 text-right">
                                     <div className="flex items-center justify-end gap-1.5">
                                       <span className="text-white font-bold">{Math.round(percent)}%</span>
-                                      <div className="w-10 h-1.5 bg-black rounded overflow-hidden">
-                                        <div className="h-full bg-white shadow-[0_0_5px_rgba(255,255,255,0.45)]" style={{ width: `${percent}%` }}></div>
+                                      <div className="w-10 h-1.5 rounded overflow-hidden" style={{ backgroundColor: "var(--theme-goal-bar-bg, #000000)" }}>
+                                        <div className="h-full" style={{ width: `${percent}%`, backgroundColor: "var(--theme-goal-bar-fill, #ffffff)", boxShadow: "var(--theme-goal-shadow)" }}></div>
                                       </div>
                                     </div>
                                   </td>
@@ -674,15 +680,15 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       )}
                     </div>
 
-                    <div className="border-t border-white/10 pt-2.5 mt-2 flex justify-between items-center">
+                    <div className="border-t border-theme-border pt-2.5 mt-2 flex justify-between items-center">
                       <span className="text-[10px] font-mono text-[#cbd5e1] uppercase">CURRENT STREAK:</span>
                       <span className="text-xs font-mono font-black text-white tracking-widest">{stats?.streaks?.currentStreak || 0} DAYS</span>
                     </div>
                   </div>
 
                   {/* Column 3: Month-over-month mini table (4 columns) */}
-                  <div className="md:col-span-4 border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-5 rounded-xl flex flex-col justify-between hover:border-white/20 transition-all duration-300 min-h-[220px]">
-                    <div className="flex items-center gap-2 border-b border-white/10 pb-2 mb-2">
+                  <div className="glass-card md:col-span-4 p-5 rounded-xl flex flex-col justify-between min-h-[220px]">
+                    <div className="flex items-center gap-2 border-b border-theme-border pb-2 mb-2">
                       <Layers size={13} className="text-white" />
                       <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#aaaaaa] uppercase">
                         MONTH-OVER-MONTH STATS
@@ -692,7 +698,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                     <div className="flex-1 overflow-auto max-h-[160px] pr-1">
                       <table className="w-full text-[9px] font-mono border-collapse text-left">
                         <thead>
-                          <tr className="text-[#666666] border-b border-white/10 pb-1 uppercase">
+                          <tr className="text-[#666666] border-b border-theme-border pb-1 uppercase">
                             <th className="py-1">MONTH</th>
                             <th className="py-1 text-center">SESS</th>
                             <th className="py-1 text-center">OK</th>
@@ -702,7 +708,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                             <th className="py-1 text-right text-[#cbd5e1]">DEAD</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/10 text-white">
+                        <tbody className="divide-y divide-theme-border text-white">
                           {sortedMoMStats.map(m => {
                             const label = monthNamesShort[m.month] || m.month;
                             return (
@@ -727,8 +733,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
                   {/* Add goal inline form wrapper */}
                   {showAddGoalForm && (
-                     <div className="md:col-span-12 p-5 bg-[#0d0d0d] border border-white/15 rounded-xl shadow-2xl animate-fadeIn space-y-3.5 backdrop-blur-md">
-                      <h4 className="text-[10px] font-mono tracking-widest text-white uppercase border-b border-white/10 pb-2 font-bold select-none">
+                     <div className="glass-card md:col-span-12 p-5 rounded-xl animate-fadeIn space-y-3.5">
+                      <h4 className="text-[10px] font-mono tracking-widest text-white uppercase border-b border-theme-border pb-2 font-bold select-none">
                         LOG NEW FOCUS GOAL
                       </h4>
 
@@ -740,7 +746,7 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                           <select
                             value={newGoalLift}
                             onChange={(e) => setNewGoalLift(e.target.value)}
-                            className="w-full bg-[#141414] border border-white/10 p-2 text-xs text-white outline-none font-mono rounded"
+                            className="w-full bg-[#141414]/90 border border-theme-border p-2 text-xs text-white outline-none font-mono rounded"
                           >
                             <option value="Bench Press">Bench Press</option>
                             <option value="Squat">Squat</option>
@@ -808,19 +814,19 @@ export default function Dashboard({ onLogout }: DashboardProps) {
 
                   {/* Lifetime PR Highlights overflow drawer if any */}
                   {stats?.prHistory && stats.prHistory.length > 0 && (
-                    <div className="border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-5 md:col-span-12 rounded-xl shadow-[0_4px_18px_rgba(0,0,0,0.3)] select-none">
-                      <div className="text-[10px] font-mono tracking-[0.2em] text-[#aaaaaa] uppercase border-b border-white/10 pb-2 mb-3 select-none flex items-center gap-1.5">
+                    <div className="glass-card p-5 md:col-span-12 rounded-xl select-none">
+                      <div className="text-[10px] font-mono tracking-[0.2em] text-[#aaaaaa] uppercase border-b border-theme-border pb-2 mb-3 select-none flex items-center gap-1.5">
                         <Trophy size={12} className="text-white" />
                         ALL HISTORICAL RECORD BREAKS ({stats.prHistory.length})
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {stats.prHistory.map((pr, idx) => (
-                          <div key={idx} className="bg-black/65 border border-white/10 p-2.5 flex items-center justify-between text-xs rounded-lg hover:border-white/25 transition-all duration-300">
+                          <div key={idx} className="bg-[#0a0f15]/75 border border-theme-border p-2.5 flex items-center justify-between text-xs rounded-lg hover:border-theme-border-hover transition-all duration-300">
                             <div>
                               <span className="font-bold text-white uppercase block text-[10px] truncate">{pr.lift}</span>
                               <span className="text-[8px] font-mono text-[#5c7285] block">{pr.date}</span>
                             </div>
-                            <span className="font-mono text-white text-[11px] font-bold bg-[#1e1e1e] px-1.5 stroke-black py-0.5 border border-white/20 rounded">
+                            <span className="font-mono text-white text-[11px] font-bold bg-[#1e1e1e] px-1.5 stroke-black py-0.5 border border-theme-border rounded">
                               {pr.weight} lb
                             </span>
                           </div>
@@ -832,8 +838,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                 </div>
 
                 {/* 3. Consistency & Exercise Heatmap section (at bottom) */}
-                <div className="border border-white/10 bg-[#0d0d0d] backdrop-blur-md p-6 rounded-xl shadow-[0_6px_25px_rgba(0,0,0,0.45)] hover:border-white/20 transition-all duration-300">
-                  <div className="border-b border-white/10 pb-3 mb-5 select-none flex items-center gap-1.5">
+                <div className="glass-card p-6 rounded-xl">
+                  <div className="border-b border-theme-border pb-3 mb-5 select-none flex items-center gap-1.5">
                     <span className="h-1.5 w-1.5 bg-white rounded-full animate-pulse"></span>
                     <h3 className="text-xs font-mono font-bold tracking-[0.2em] text-[#f8fafc] uppercase">
                       CONSISTENCY & EXERCISE HEATMAP - {selectedMonth}
@@ -843,19 +849,19 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                     {/* Left: 4 stat boxes */}
                     <div className="lg:col-span-4 grid grid-cols-2 gap-3 shrink-0">
-                      <div className="bg-black/75 border border-white/10 p-3.5 rounded-lg">
+                      <div className="bg-[#0a0f15]/75 border border-theme-border p-3.5 rounded-lg">
                         <span className="text-[8px] font-mono text-[#aaaaaa] uppercase tracking-wider block">TRACKED DAYS</span>
                         <div className="text-sm font-mono font-black text-white mt-1 uppercase">{selectedMonthStats.trained} DAYS</div>
                       </div>
-                      <div className="bg-black/75 border border-white/10 p-3.5 rounded-lg">
+                      <div className="bg-[#0a0f15]/75 border border-theme-border p-3.5 rounded-lg">
                         <span className="text-[8px] font-mono text-neutral-400 uppercase tracking-wider block">SKIPPED DAYS</span>
                         <div className="text-sm font-mono font-black text-neutral-300 mt-1 uppercase">{selectedMonthStats.skipped} DAYS</div>
                       </div>
-                      <div className="bg-black/75 border border-white/10 p-3.5 rounded-lg">
+                      <div className="bg-[#0a0f15]/75 border border-theme-border p-3.5 rounded-lg">
                         <span className="text-[8px] font-mono text-[#cbd5e1] uppercase tracking-wider block">REST DAYS</span>
                         <div className="text-sm font-mono font-black text-neutral-400 mt-1 uppercase">{selectedMonthStats.rest} DAYS</div>
                       </div>
-                      <div className="bg-black/75 border border-white/10 p-3.5 rounded-lg">
+                      <div className="bg-[#0a0f15]/75 border border-theme-border p-3.5 rounded-lg">
                         <span className="text-[8px] font-mono text-white uppercase tracking-wider block">MONTHLY PCT RATE</span>
                         <div className="text-sm font-mono font-black text-white mt-1 uppercase">{selectedMonthStats.hitRate}%</div>
                       </div>
@@ -877,9 +883,8 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                         <span>NOV</span>
                         <span>DEC</span>
                       </div>
-                      
-                      {/* GitHub Contributions board scrollable layout */}
-                      <div className="overflow-x-auto border border-white/10 p-3 bg-black rounded-lg">
+                             {/* GitHub Contributions board scrollable layout */}
+                      <div className="overflow-x-auto border border-theme-border p-3 bg-black/45 rounded-lg">
                         <div className="flex gap-[3.5px] min-w-[530px]">
                           {weeks.map((week, wIdx) => (
                             <div key={wIdx} className="flex flex-col gap-[3.5px] shrink-0">
@@ -900,19 +905,19 @@ export default function Dashboard({ onLogout }: DashboardProps) {
                       {/* Micro Legend labels */}
                       <div className="flex justify-end gap-3 mt-2 text-[8px] font-mono text-[#5c7285] select-none uppercase">
                         <div className="flex items-center gap-1">
-                          <div className="w-[8px] h-[8px] bg-[#111111] border border-white/5 rounded-[1px]" />
+                          <div className="w-[8px] h-[8px] bg-theme-unlogged-bg border border-theme-unlogged-border rounded-[1px]" />
                           <span>UNLOGGED</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <div className="w-[8px] h-[8px] bg-[#1c1c1c] border border-white/10 rounded-[1px]" />
+                          <div className="w-[8px] h-[8px] bg-theme-rest-bg border border-theme-rest-border rounded-[1px]" />
                           <span>REST</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <div className="w-[8px] h-[8px] bg-[#2a2a2a] border border-white/20 rounded-[1px]" />
+                          <div className="w-[8px] h-[8px] bg-theme-skip-bg border border-theme-skip-border rounded-[1px]" />
                           <span>SKIP</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <div className="w-[8px] h-[8px] bg-white border border-white rounded-[1px]" />
+                          <div className="w-[8px] h-[8px] bg-theme-trained-bg border border-theme-trained-border rounded-[1px]" />
                           <span>TRAINED</span>
                         </div>
                       </div>
@@ -965,6 +970,15 @@ export default function Dashboard({ onLogout }: DashboardProps) {
         sessionToEdit={sessionToEdit}
         existingLiftNames={distinctLiftNames}
       />
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <SettingsModal
+          theme={theme}
+          onThemeChange={setTheme}
+          onClose={() => setShowSettings(false)}
+        />
+      )}
     </div>
   );
 }

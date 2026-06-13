@@ -91,10 +91,14 @@ export default function GoalBar({ goals, currentWeights, onDeleteGoal, onAddGoal
                 </div>
 
                 {/* Outer Progress bar */}
-                <div className="h-5 bg-[#141414] border border-white/10 relative overflow-hidden rounded-md">
+                <div className="h-5 bg-[var(--theme-goal-bar-bg)] border border-white/10 relative overflow-hidden rounded-md">
                   <div
-                    className="h-full bg-gradient-to-r from-white/70 to-white/95 shadow-[0_0_8px_rgba(255,255,255,0.3)] transition-all duration-1000 ease-out"
-                    style={{ width: `${formattedPercent}%` }}
+                    className="h-full transition-all duration-1000 ease-out"
+                    style={{ 
+                      width: `${formattedPercent}%`,
+                      background: "var(--theme-goal-bar-fill)",
+                      boxShadow: "var(--theme-goal-shadow)"
+                    }}
                   ></div>
                   
                   {/* Subtle info label overlay */}

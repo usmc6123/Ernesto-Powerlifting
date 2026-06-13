@@ -60,32 +60,32 @@ export default function CalendarGrid({ selectedMonth, sessions }: CalendarGridPr
 
     if (isFuture) {
       // Future dates are very faded
-      return "bg-[#111111] border border-white/5 text-[#555555] rounded-md";
+      return "bg-theme-unlogged-bg/20 border border-theme-unlogged-border/20 text-[#555555] rounded-md";
     }
 
     if (!session) {
       // Past day with no logged session is counted as skipped / unlogged
-      return "bg-[#2a2a2a] border border-transparent text-[#666666] hover:border-white/10 rounded-md";
+      return "bg-theme-unlogged-bg border border-theme-unlogged-border text-theme-text-dim hover:border-theme-accent/40 rounded-md";
     }
 
     switch (session.type) {
       case "trained":
-        return "bg-white text-black font-bold border border-white shadow-[0_0_12px_rgba(255,255,255,0.4)] hover:shadow-[0_0_15px_rgba(255,255,255,0.6)] rounded-md cursor-pointer";
+        return "bg-theme-trained-bg text-theme-trained-text font-bold border border-theme-trained-border shadow-var(--theme-month-active-bar, 0_0_12px_rgba(6,182,212,0.4)) rounded-md cursor-pointer";
       case "home":
-        return "bg-[#cccccc] border border-white text-black font-bold shadow-[0_0_8px_rgba(255,255,255,0.2)] rounded-md cursor-pointer";
+        return "bg-theme-trained-bg/85 font-bold border border-theme-trained-border text-theme-trained-text shadow-var(--theme-month-active-bar, 0_0_8px_rgba(6,182,212,0.2)) rounded-md cursor-pointer";
       case "rest":
-        return "bg-[#1a1a1a]/80 border border-white/10 text-[#aaaaaa] hover:text-white rounded-md cursor-pointer";
+        return "bg-theme-rest-bg border border-theme-rest-border text-theme-text-dim hover:text-white rounded-md cursor-pointer";
       case "skipped":
-        return "bg-[#2a2a2a] border border-white/10 text-white/50 hover:border-white/20 rounded-md cursor-pointer";
+        return "bg-theme-skip-bg border border-theme-skip-border text-[#cbd5e1]/60 hover:text-white rounded-md cursor-pointer";
       default:
-        return "bg-[#111111] text-[#cbd5e1] border border-white/10 rounded-md";
+        return "bg-theme-unlogged-bg text-theme-text border border-theme-border rounded-md";
     }
   };
 
   return (
-    <div className="border border-white/10 bg-white/[0.04] backdrop-blur-md p-5 w-full rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.6)] select-none">
+    <div className="glass-card p-5 w-full rounded-xl select-none">
       <div className="text-[10px] font-mono tracking-[0.2em] text-[#aaaaaa] mb-4 uppercase select-none flex items-center gap-2">
-        <span className="h-1.5 w-1.5 bg-white rounded-full animate-ping"></span>
+        <span className="h-1.5 w-1.5 bg-theme-accent rounded-full animate-ping"></span>
         CONSISTENCY CALENDAR GRID — {selectedMonth}
       </div>
 
@@ -117,7 +117,7 @@ export default function CalendarGrid({ selectedMonth, sessions }: CalendarGridPr
                   <span className="h-1 w-1 bg-current rounded-full mb-0.5" />
                 )}
                 {cell.session?.type === "trained" && (
-                  <span className="h-1 w-1 bg-[#0a0a0a] rounded-full mb-0.5" />
+                  <span className="h-1 w-1 bg-current rounded-full mb-0.5" />
                 )}
               </>
             )}
@@ -126,39 +126,39 @@ export default function CalendarGrid({ selectedMonth, sessions }: CalendarGridPr
       </div>
 
       {/* Legend below calendar */}
-      <div className="mt-5 border-t border-white/10 pt-4 grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+      <div className="mt-5 border-t border-theme-border pt-4 grid grid-cols-2 sm:grid-cols-5 gap-2.5">
         <div className="flex items-center gap-2">
-          <div className="w-3.5 h-3.5 bg-white border border-white rounded-sm shadow-[0_0_5px_rgba(255,255,255,0.3)]"></div>
-          <span className="text-[9px] font-mono tracking-wider text-[#cbd5e1] uppercase">
+          <div className="w-3.5 h-3.5 bg-theme-trained-bg border border-theme-trained-border rounded-sm shadow-var(--theme-month-active-bar, 0_0_5px_rgba(255,255,255,0.3))"></div>
+          <span className="text-[9px] font-mono tracking-wider text-theme-text-dim uppercase">
             TRAINED (GYM)
           </span>
         </div>
         
         <div className="flex items-center gap-2">
-          <div className="w-3.5 h-3.5 bg-[#cccccc] border border-white rounded-sm"></div>
-          <span className="text-[9px] font-mono tracking-wider text-[#cbd5e1] uppercase">
+          <div className="w-3.5 h-3.5 bg-theme-trained-bg/85 border border-theme-trained-border rounded-sm"></div>
+          <span className="text-[9px] font-mono tracking-wider text-theme-text-dim uppercase">
             HOME WORKOUT
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="w-3.5 h-3.5 bg-[#1a1a1a]/80 border border-white/10 rounded-sm"></div>
-          <span className="text-[9px] font-mono tracking-wider text-[#cbd5e1] uppercase">
+          <div className="w-3.5 h-3.5 bg-theme-rest-bg border border-theme-rest-border rounded-sm"></div>
+          <span className="text-[9px] font-mono tracking-wider text-theme-text-dim uppercase">
             REST DAY
           </span>
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="w-3.5 h-3.5 bg-[#2a2a2a] border border-white/10 rounded-sm"></div>
-          <span className="text-[9px] font-mono tracking-wider text-[#cbd5e1] uppercase">
+          <div className="w-3.5 h-3.5 bg-theme-skip-bg border border-theme-skip-border rounded-sm"></div>
+          <span className="text-[9px] font-mono tracking-wider text-theme-text-dim uppercase">
             SKIPPED LOG
           </span>
         </div>
 
         <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-          <div className="w-3.5 h-3.5 bg-[#111111] border border-white/5 rounded-sm"></div>
-          <span className="text-[9px] font-mono tracking-wider text-[#cbd5e1] uppercase">
-            UNLOGGED FUTURE
+          <div className="w-3.5 h-3.5 bg-theme-unlogged-bg border border-theme-unlogged-border rounded-sm"></div>
+          <span className="text-[9px] font-mono tracking-wider text-theme-text-dim uppercase">
+            UNLOGGED
           </span>
         </div>
       </div>

@@ -46,8 +46,8 @@ export default function SessionCard({ session, onEdit, onDelete }: SessionCardPr
   return (
     <div
       onClick={() => hasLifts && setIsExpanded(!isExpanded)}
-      className={`border border-white/10 bg-white/[0.04] backdrop-blur-md transition-all duration-300 relative rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.6)] ${
-        hasLifts ? "cursor-pointer hover:border-white/20 hover:shadow-[0_0_12px_rgba(255,255,255,0.1)]" : ""
+      className={`glass-card transition-all duration-300 relative rounded-xl overflow-hidden ${
+        hasLifts ? "cursor-pointer" : ""
       }`}
     >
       {/* Header card view */}
